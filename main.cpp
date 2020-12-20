@@ -12,12 +12,13 @@ static constexpr int N = 13;
 static constexpr int M = 13;
 
 static constexpr int H = N > M ? N : M;
+static constexpr long long N_1 = N*N*N*N*N*N;
+static constexpr long long N_2 = N_1*N_1*N;
 
 /*!
 * Algoritm sieve
 */
 
-std::mutex mutex;
 
 
 bool Algorithm(int* arr) {
@@ -68,22 +69,23 @@ int main()
       auto num_thred = (std::thread::hardware_concurrency() > 0) ? std::thread::hardware_concurrency() : 8;
 
       for (int i = 0; i < H; i++) arr[i] = 0;
-      auto Loowp([&](auto& count) {
-          while (Algorithm(arr)) init_set(arr, count);
-      });
-      auto second_task = std::async(std::launch::async, std::bind(Loowp, std::ref(count)));
+//      auto Loowp([&](auto& count) {
+//          while (Algorithm(arr)) init_set(arr, count);
+//      });
+//      auto second_task = std::async(std::launch::async, std::bind(Loowp, std::ref(count)));
 
-      second_task.get();
-//      unsigned long long i;
-//      #pragma omp parallel shared(arr, count, N) private(i)
-//      {
-//          #pragma omp parallel for
+//      second_task.get();
+      unsigned long long i;
+      #pragma omp parallel shared(arr, count, N_2) private(i)
+      {
+          #pragma omp for
 
-//              for (i = 0; i < N*N*N*N*N*N*N*N*N*N*N*N*N; ++i) {
-//                  if(Algorithm(arr)) init_set(arr, count);
-//              }
+              for (i = 0; i < N_2; ++i) {
+                  if(Algorithm(arr)) init_set(arr, count);
+              }
 
-//      }
+      }
+
 
       return 0;
 }
