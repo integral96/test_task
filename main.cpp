@@ -79,12 +79,12 @@ void init_set(std::atomic_int* var_to_int, read_num* values)
             tmp1 = values[i].x0+values[i].x1+values[i].x2+values[i].x3+values[i].x4+values[i].x5;
             tmp2 = values[i].x6+values[i].x7+values[i].x8+values[i].x9+values[i].x10+values[i].x11;
         }
-        std::this_thread::yield();
+       
         if(tmp1 == tmp2) {
             std::cout << "num: " << num++ << ": ";
             std::cout << std::endl;
         }
-
+      std::this_thread::yield();
 }
 
 int main()
