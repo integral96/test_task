@@ -12,6 +12,6 @@ struct ALL_COUNT<1> {
 int main()
 {
     std::cout << "Общее количество перестановок: " <<  ALL_COUNT<13>::value << std::endl;
-    std::cout << "Количество перестановок при которых суммы равны: " <<  ALL_COUNT<6>::value << std::endl;
+    std::cout << "Количество перестановок при которых суммы равны: " <<  13*ALL_COUNT<6>::value << std::endl;
     return 0;
 }
